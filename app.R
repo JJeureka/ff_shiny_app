@@ -55,7 +55,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   # Create a reactive expression for the summary table
-  summary_table_reactive <- eventReactive(input$submit_button, {
+  summary_table_reactive <- eventReactive(input$submit_runbutton, {
     league_input <- input$league_input
     year_input <- input$year_input
     
