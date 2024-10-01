@@ -40,7 +40,7 @@ ui <- fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      textInput("league_input", "Enter League ID", value = "533712"),
+      textInput("league_input", "Enter League ID"),
       numericInput("year_input", "Enter Season Year", value = 2022, min = 2000, max = 2024),
       actionButton("submit_button", "Get Summary")
     ),
