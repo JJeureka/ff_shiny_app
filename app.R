@@ -32,16 +32,17 @@ library(shiny)
 library(dplyr)
 library(kableExtra)
 library(jsonlite)
-source("helper.R")  # This is the file that contains the display_data_function
+source("helper1.R")
 
-# Define the UI
+
 ui <- fluidPage(
   titlePanel("Fantasy Football Points Summary"),
   
   sidebarLayout(
     sidebarPanel(
       textInput("league_input", "Enter League ID"),
-      numericInput("year_input", "Enter Season Year", value = 2022, min = 2000, max = 2024),
+      numericInput("start_year", "Enter Starting Year", value = 2014, min = 2000, max = 2023),
+      numericInput("end_year", "Enter Ending Year", value = 2023, min = 2000, max = 2023),
       actionButton("submit_button", "Get Summary")
     ),
     
@@ -51,25 +52,21 @@ ui <- fluidPage(
   )
 )
 
-# Define the server logic
 server <- function(input, output, session) {
   
-  # Create a reactive expression for the summary table
-  summary_table_reactive <- eventReactive(input$submit_runbutton, {
+  summary_table_reactive <- eventReactive(input$submit_button, {
     league_input <- input$league_input
-    year_input <- input$year_input
+    start_year <- input$start_year
+    end_year <- input$end_year
     
-    # Call the display_data_function from the helper.R file
-    display_data_function(league_input, year_input)
+    get_all_years(league_input, start_year, end_year)
   })
   
-  # Render the summary table when the submit button is clicked
   output$summary_table <- renderUI({
     summary_table_reactive() %>%
       HTML()
   })
 }
 
-# Run the application
 shinyApp(ui = ui, server = server)
 
