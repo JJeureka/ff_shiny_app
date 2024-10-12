@@ -1,3 +1,9 @@
+# get_all_years <- function (league_input, start_year, end_year) {
+
+#for loop here
+
+# 
+
 display_data_function <- function(league_input, year_input) {
   
   url_output <- paste0("https://lm-api-reads.fantasy.espn.com/apis/v3/games/FFL/leagueHistory/",league_input,"?view=mMatchupScore&view=mStatus&view=mSettings&view=mTeam&view=modular&view=mNav&seasonId=",year_input)
@@ -24,6 +30,8 @@ display_data_function <- function(league_input, year_input) {
   
   result_unnested_overall <- result_unnested_record %>%
     unnest(cols = c(overall))
+  
+  #would close for loop here }
   
   final_crew_data <- result_unnested_overall %>%
     select(displayName, firstName, points, pointsFor, pointsAgainst, id, owners)

@@ -47,25 +47,34 @@ ui <- fluidPage(
     ),
     
     mainPanel(
-      uiOutput("summary_table")
+      uiOutput("summary_table_as_char"),
+      plotOutput("scores_over_time_final", width = "100em", height = "100em")
     )
   )
 )
 
 server <- function(input, output, session) {
   
-  summary_table_reactive <- eventReactive(input$submit_button, {
+ 
+  
+ summary_table_reactive <- eventReactive(input$submit_button, {
     league_input <- input$league_input
     start_year <- input$start_year
     end_year <- input$end_year
-    
     get_all_years(league_input, start_year, end_year)
   })
   
-  output$summary_table <- renderUI({
-    summary_table_reactive() %>%
-      HTML()
+
+  output$summary_table_as_char <- renderUI({
+    HTML(summary_table_reactive()$summary_table_as_char)
   })
+
+  
+  output$scores_over_time_final <- renderPlot({
+   summary_table_reactive()$scores_over_time_final
+  })
+  
+  
 }
 
 shinyApp(ui = ui, server = server)
